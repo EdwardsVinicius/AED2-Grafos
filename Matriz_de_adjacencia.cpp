@@ -11,7 +11,7 @@ private:
 	bool digrafo;
 
 public:
-	Grafo(int V, bool digrafo = false);
+	Grafo(int V, bool digrafo);
 
 	void adicionarVertice();
 	void removerVertice(int v);
@@ -21,7 +21,7 @@ public:
 	void print();
 };
 
-Grafo::Grafo(int V, bool digrafo = false) {
+Grafo::Grafo(int V, bool digrafo){
 	this->V = V;
 	this->digrafo = digrafo;
 	adj.resize(V);
@@ -74,9 +74,13 @@ void Grafo::removerAresta(int v1, int v2){
 		}
 	}
 	else{
-		if(adj[v1][v2] == 0)
+		if(adj[v1][v2] != 0){
 			adj[v1][v2]--;
 			adj[v2][v1]--;
+		}
+		else{
+			cout << "\nErro! Aresta nao existe.\n";
+		}
 	}
 }
 
@@ -87,7 +91,6 @@ int Grafo::obterGrau(int v) {
 	}
 	return grau;
 }
-
 
 void Grafo::print(){
 	cout << endl;
@@ -101,24 +104,14 @@ void Grafo::print(){
 }
 
 int main() {
-	Grafo grafo(4);
+	Grafo grafo(4, true);
 
 	grafo.adicionarAresta(0, 1);
-	grafo.print();
-	grafo.adicionarAresta(3, 1);
-	grafo.print();
-	grafo.adicionarAresta(2, 2);
-	grafo.print();
-	grafo.adicionarVertice();
-	grafo.print();
-	grafo.removerAresta(0, 1);
-	grafo.print();
-	grafo.removerAresta(3, 2);
-	grafo.print();
-
-	grafo.adicionarAresta(0, 1);
-	grafo.adicionarAresta(0, 4);
-	grafo.removerVertice(2);
+	grafo.adicionarAresta(0, 2);
+	grafo.adicionarAresta(0, 3);
+	grafo.adicionarAresta(1, 3);
+	grafo.adicionarAresta(2, 3);
+	grafo.adicionarAresta(3, 2);
 	grafo.print();
 
 	
