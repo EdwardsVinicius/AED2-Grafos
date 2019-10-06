@@ -135,50 +135,13 @@ void Grafo::printAll(){
 }
 
 void Grafo::buscaProfudindade(int v){
-	vector<int> pilha;
 	bool visitados[V]; // vetor de visitados
  
 	// marca todos como não visitados
 	for(int i = 0; i < V; i++)
 		visitados[i] = false;
  
-	while(true)
-	{
-		if(!visitados[v])
-		{
-			cout << "Visitando vertice " << v << " ...\n";
-			visitados[v] = true; // marca como visitado
-			pilha.push_back(v); // insere "v" na pilha
-		}
- 
-		bool achou = false;
-		vector<int>::iterator it;
- 
-		// busca por um vizinho não visitado
-		for(it = adj[v].begin(); it != adj[v].end(); it++)
-		{
-			if(!visitados[*it])
-			{
-				achou = true;
-				break;
-			}
-		}
- 
-		if(achou)
-			v = *it; // atualiza o "v"
-		else
-		{
-			// se todos os vizinhos estão visitados ou não existem vizinhos
-			// remove da pilha
-			pilha.pop_back();
-			// se a pilha ficar vazia, então terminou a busca
-			if(pilha.empty())
-				break;
-			// se chegou aqui, é porque pode pegar elemento do topo
-			vector<int>::iterator it = pilha.end();
-			v = *it;
-		}
-	}
+	this->dfsUtil(v, visitados);
 }
 
 
@@ -225,22 +188,22 @@ void Grafo::bellmanFord(int origem){
 void Grafo::dijkstra(int origem){
 	int distancia[V];
 	int predecessor[V];
-	bool visitado[V]; 
+	bool visitados[V]; 
 
 	for (int i = 0; i < V; i++){
         distancia[i] = INF;
 		predecessor[i] = -1;
-		visitado[i] = false;
+		visitados[i] = false;
 	}
     distancia[origem] = 0;
 
 	for (int count = 0; count < V - 1; count++) { 
-        int u = this->distanciaMin(distancia, visitado); 
+        int u = this->distanciaMin(distancia, visitados); 
   
-        visitado[u] = true; 
+        visitados[u] = true; 
   
         for (int v = 0; v < V; v++) 
-            if (!visitado[v] && adj[u][v] && distancia[u] != INF
+            if (!visitados[v] && adj[u][v] && distancia[u] != INF
                 && distancia[u] + adj[u][v] < distancia[v]){
 
                 distancia[v] = distancia[u] + adj[u][v];
@@ -279,4 +242,21 @@ int Grafo::distanciaMin(int distancia[], bool visitado[]){
 	}
 	
 	return minIndex;
+}
+
+void Grafo::dfsUtil(int v, bool visitados[]){
+	// Mark the current node as visited and 
+    // print it 
+    visitados[v] = true; 
+    cout << v << " "; 
+  
+    // Recur for all the vertices adjacent 
+    // to this vertex 
+	for(int i = 0; i < V; i++){
+		if(adj[v][i] != 0){
+			if (!visitados[i]){
+            	dfsUtil(i, visitados);
+			}
+		}
+	}
 }

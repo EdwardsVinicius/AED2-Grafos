@@ -24,6 +24,7 @@ private:
 	void auxResizeVertice();
 	void printSolution(int distancia[], int predecessor[]);
 	int distanciaMin(int distancia[], bool visitado[]);
+	void dfsUtil(int v, bool visitado[]);
 
 public:
 	Grafo(int V, bool digrafo = false);
