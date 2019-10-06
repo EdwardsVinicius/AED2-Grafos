@@ -13,7 +13,7 @@ int main() {
     grafo.adicionarAresta(3, 3);
 
     grafo.printAll();
-    grafo.buscaProfudindade(2);
+    grafo.buscaLargura(2);
 
     return 0;
 }

@@ -144,6 +144,32 @@ void Grafo::buscaProfudindade(int v){
 	this->dfsUtil(v, visitados);
 }
 
+void Grafo::buscaLargura(int v){
+    bool visitados[V];
+    vector<int> fila;
+
+    for(int i = 0; i < V; i++)
+        visitados[i] = false;
+  
+    visitados[v] = true; 
+    fila.push_back(v); 
+  
+    while(!fila.empty()){ 
+        v = fila.front(); 
+        cout << v << " ";
+		vector<int>::iterator it = fila.begin();
+        fila.erase(it); 
+  
+		for(int i = 0; i < V; i++){
+			if(adj[v][i] != 0){
+				if (!visitados[i]){
+					visitados[i] = true; 
+					fila.push_back(i); 
+				}
+			}
+		} 
+    } 
+}
 
 void Grafo::bellmanFord(int origem){
 	int distancia[V];
@@ -245,13 +271,9 @@ int Grafo::distanciaMin(int distancia[], bool visitado[]){
 }
 
 void Grafo::dfsUtil(int v, bool visitados[]){
-	// Mark the current node as visited and 
-    // print it 
     visitados[v] = true; 
     cout << v << " "; 
   
-    // Recur for all the vertices adjacent 
-    // to this vertex 
 	for(int i = 0; i < V; i++){
 		if(adj[v][i] != 0){
 			if (!visitados[i]){
